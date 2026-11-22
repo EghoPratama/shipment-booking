@@ -35,71 +35,40 @@
       />
     </div>
 
-    <div>
-      <label for="province" class="mb-1 block text-sm font-medium text-slate-700">Provinsi</label>
-      <select
-        id="province"
+    <div class="flex flex-col gap-4">
+      <app-select-field
+        label="Provinsi"
+        placeholder="Pilih provinsi"
+        [options]="provinces()"
         formControlName="provinceId"
-        class="w-full rounded-md border border-slate-300 px-3 py-2 disabled:bg-slate-100 disabled:text-slate-400"
-      >
-        <option value="" disabled>Pilih provinsi</option>
-        @for (item of provinces(); track item.id) {
-          <option [value]="item.id">{{ item.name }}</option>
-        }
-      </select>
-    </div>
+      />
 
-    <div>
-      <label for="regency" class="mb-1 block text-sm font-medium text-slate-700">
-        Kota / Kabupaten
-      </label>
-      <select
-        id="regency"
+      <app-select-field
+        label="Kota / Kabupaten"
+        placeholder="Pilih kota / kabupaten"
+        [options]="regencies()"
+        [loading]="loadingRegencies()"
         formControlName="regencyId"
-        class="w-full rounded-md border border-slate-300 px-3 py-2 disabled:bg-slate-100 disabled:text-slate-400"
-      >
-        <option value="" disabled>
-          {{ loadingRegencies() ? 'Memuat...' : 'Pilih kota / kabupaten' }}
-        </option>
-        @for (item of regencies(); track item.id) {
-          <option [value]="item.id">{{ item.name }}</option>
-        }
-      </select>
-    </div>
+      />
 
-    <div>
-      <label for="district" class="mb-1 block text-sm font-medium text-slate-700">Kecamatan</label>
-      <select
-        id="district"
+      <app-select-field
+        label="Kecamatan"
+        placeholder="Pilih kecamatan"
+        [options]="districts()"
+        [loading]="loadingDistricts()"
         formControlName="districtId"
-        class="w-full rounded-md border border-slate-300 px-3 py-2 disabled:bg-slate-100 disabled:text-slate-400"
-      >
-        <option value="" disabled>
-          {{ loadingDistricts() ? 'Memuat...' : 'Pilih kecamatan' }}
-        </option>
-        @for (item of districts(); track item.id) {
-          <option [value]="item.id">{{ item.name }}</option>
-        }
-      </select>
-    </div>
+      />
 
-    <div>
-      <label for="village" class="mb-1 block text-sm font-medium text-slate-700">Kelurahan</label>
-      <select
-        id="village"
+      <app-select-field
+        label="Kelurahan"
+        placeholder="Pilih kelurahan"
+        [options]="villages()"
+        [loading]="loadingVillages()"
         formControlName="villageId"
-        class="w-full rounded-md border border-slate-300 px-3 py-2 disabled:bg-slate-100 disabled:text-slate-400"
-      >
-        <option value="" disabled>
-          {{ loadingVillages() ? 'Memuat...' : 'Pilih kelurahan' }}
-        </option>
-        @for (item of villages(); track item.id) {
-          <option [value]="item.id">{{ item.name }}</option>
-        }
-      </select>
+      />
     </div>
 
-    <div class="flex gap-3">
+    <div class="flex gap-3 mt-4">
       <button
         type="button"
         (click)="back()"

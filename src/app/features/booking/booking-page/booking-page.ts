@@ -6,10 +6,11 @@ import { catchError, finalize, Observable, of, switchMap, tap } from 'rxjs';
 import { Province } from '../../../core/models/region.model';
 import { BookingStore } from '../../../core/services/booking-store.service';
 import { RegionService } from '../../../core/services/region.service';
+import { SelectField } from '../../../shared/components/select-field/select-field';
 
 @Component({
   selector: 'app-booking-page',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SelectField],
   templateUrl: './booking-page.html',
   styleUrl: './booking-page.css',
 })

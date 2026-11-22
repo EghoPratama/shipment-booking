@@ -1,0 +1,16 @@
+<label class="block">
+  <span class="mb-1 block text-sm font-medium text-slate-700">{{ label() }}</span>
+  <select
+    class="w-full rounded-md border border-slate-300 px-3 py-2 disabled:bg-slate-100 disabled:text-slate-400"
+    [disabled]="disabled()"
+    (change)="onSelect($event)"
+    (blur)="onBlur()"
+  >
+    <option value="" disabled [selected]="!value()">
+      {{ loading() ? 'Memuat...' : placeholder() }}
+    </option>
+    @for (item of options(); track item.id) {
+      <option [value]="item.id" [selected]="item.id === value()">{{ item.name }}</option>
+    }
+  </select>
+</label>
