@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { bookingStepGuard } from './core/guards/booking-step.guard';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'booking' },
@@ -15,20 +16,26 @@ export const routes: Routes = [
       },
       {
         path: 'recipient',
+        canActivate: [bookingStepGuard('sender')],
         loadComponent: () =>
           import('./features/booking/booking-page/booking-page').then((m) => m.BookingPage),
       },
       {
         path: 'package',
+        canActivate: [bookingStepGuard('sender', 'recipient')],
         loadComponent: () =>
           import('./features/booking/package-step/package-step').then((m) => m.PackageStep),
       },
       {
         path: 'summary',
+        canActivate: [bookingStepGuard('sender', 'recipient', 'package')],
         loadComponent: () =>
           import('./features/booking/summary-step/summary-step').then((m) => m.SummaryStep),
       },
     ],
   },
-  { path: '**', redirectTo: 'booking' },
+  {
+    path: '**',
+    loadComponent: () => import('./features/not-found/not-found/not-found').then((m) => m.NotFound),
+  },
 ];
