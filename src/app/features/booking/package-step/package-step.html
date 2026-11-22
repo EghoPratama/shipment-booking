@@ -1,0 +1,61 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="space-y-4 rounded-xl bg-white p-6 shadow"
+>
+  <h2 class="text-xl font-semibold text-slate-800">Detail Paket</h2>
+
+  <div>
+    <label for="weight" class="mb-1 block text-sm font-medium text-slate-700">Berat (kg)</label>
+    <input
+      id="weight"
+      type="number"
+      step="0.1"
+      formControlName="weightKg"
+      class="w-full rounded-md border border-slate-300 px-3 py-2"
+    />
+    @if (form.controls.weightKg.touched && form.controls.weightKg.invalid) {
+      <p class="mt-1 text-sm text-red-600">Berat harus antara 0,1 dan 70 kg.</p>
+    }
+  </div>
+
+  <div>
+    <label for="description" class="mb-1 block text-sm font-medium text-slate-700">
+      Isi Paket
+    </label>
+    <input
+      id="description"
+      type="text"
+      formControlName="description"
+      class="w-full rounded-md border border-slate-300 px-3 py-2"
+    />
+    @if (form.controls.description.touched && form.controls.description.invalid) {
+      <p class="mt-1 text-sm text-red-600">Isi paket wajib diisi.</p>
+    }
+  </div>
+
+  <div>
+    <label for="service" class="mb-1 block text-sm font-medium text-slate-700">Layanan</label>
+    <select
+      id="service"
+      formControlName="service"
+      class="w-full rounded-md border border-slate-300 px-3 py-2"
+    >
+      <option value="REGULAR">Reguler (2-4 hari)</option>
+      <option value="EXPRESS">Express (1-2 hari)</option>
+    </select>
+  </div>
+
+  <div class="flex gap-3">
+    <button
+      type="button"
+      (click)="back()"
+      class="w-1/3 rounded-md border border-slate-300 px-4 py-2 font-medium text-slate-700 cursor-pointer"
+    >
+      Kembali
+    </button>
+    <button type="submit" class="w-2/3 rounded-md bg-blue-600 px-4 py-2 font-medium text-white cursor-pointer">
+      Lanjut
+    </button>
+  </div>
+</form>

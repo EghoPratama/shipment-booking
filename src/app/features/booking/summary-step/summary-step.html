@@ -1,0 +1,52 @@
+@if (summary(); as s) {
+  <div class="space-y-4 rounded-xl bg-white p-6 shadow">
+    <h2 class="text-xl font-semibold text-slate-800">Ringkasan Pesanan</h2>
+
+    <dl class="space-y-3 text-sm text-slate-800">
+      <div>
+        <dt class="font-medium text-slate-500">Pengirim</dt>
+        <dd>{{ s.sender.name }} · {{ s.sender.phone }}</dd>
+      </div>
+      <div>
+        <dt class="font-medium text-slate-500">Penerima</dt>
+        <dd>
+          {{ s.recipient.name }}<br />
+          {{ s.recipient.street }}, {{ s.recipient.villageName }},
+          {{ s.recipient.districtName }}, {{ s.recipient.regencyName }},
+          {{ s.recipient.provinceName }}
+        </dd>
+      </div>
+      <div>
+        <dt class="font-medium text-slate-500">Paket</dt>
+        <dd>{{ s.pkg.description }} · {{ s.pkg.weightKg }} kg · {{ s.pkg.service }}</dd>
+      </div>
+      <div>
+        <dt class="font-medium text-slate-500">Estimasi ongkir</dt>
+        <dd class="text-lg font-semibold">
+          {{ s.cost | currency: 'IDR' : 'symbol-narrow' : '1.0-0' }}
+        </dd>
+      </div>
+    </dl>
+
+    <div class="flex gap-3">
+      <button
+        type="button"
+        (click)="back()"
+        class="w-1/3 rounded-md border border-slate-300 px-4 py-2 font-medium text-slate-700 cursor-pointer"
+      >
+        Kembali
+      </button>
+      <button
+        type="button"
+        (click)="confirm()"
+        class="w-2/3 rounded-md bg-blue-600 px-4 py-2 font-medium text-white cursor-pointer"
+      >
+        Konfirmasi Booking
+      </button>
+    </div>
+  </div>
+} @else {
+  <p class="rounded-md bg-amber-50 p-4 text-sm text-amber-800">
+    Data booking belum lengkap. Silakan mulai dari langkah pertama.
+  </p>
+}

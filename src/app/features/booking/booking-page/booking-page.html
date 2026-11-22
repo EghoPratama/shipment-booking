@@ -1,4 +1,4 @@
-<section class="mx-auto max-w-xl p-6">
+<section>
   <h2 class="mb-4 text-xl font-semibold text-slate-800">Alamat Penerima</h2>
 
   @if (errorMessage(); as message) {
@@ -10,6 +10,31 @@
     (ngSubmit)="onSubmit()"
     class="space-y-4 rounded-xl bg-white p-6 shadow"
   >
+    <div>
+      <label for="recipient-name" class="mb-1 block text-sm font-medium text-slate-700">
+        Nama Penerima
+      </label>
+      <input
+        id="recipient-name"
+        type="text"
+        formControlName="name"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      />
+    </div>
+
+    <div>
+      <label for="street" class="mb-1 block text-sm font-medium text-slate-700">
+        Alamat Lengkap
+      </label>
+      <input
+        id="street"
+        type="text"
+        formControlName="street"
+        placeholder="Nama jalan, nomor rumah, RT/RW"
+        class="w-full rounded-md border border-slate-300 px-3 py-2"
+      />
+    </div>
+
     <div>
       <label for="province" class="mb-1 block text-sm font-medium text-slate-700">Provinsi</label>
       <select
@@ -74,12 +99,21 @@
       </select>
     </div>
 
-    <button
-      type="submit"
-      [disabled]="form.invalid"
-      class="w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2 font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
-    >
-      Lanjut
-    </button>
+    <div class="flex gap-3">
+      <button
+        type="button"
+        (click)="back()"
+        class="w-1/3 rounded-md border border-slate-300 px-4 py-2 font-medium text-slate-700 cursor-pointer"
+      >
+        Kembali
+      </button>
+      <button
+        type="submit"
+        [disabled]="!isComplete()"
+        class="w-2/3 rounded-md bg-blue-600 px-4 py-2 font-medium text-white disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+      >
+        Lanjut
+      </button>
+    </div>
   </form>
 </section>

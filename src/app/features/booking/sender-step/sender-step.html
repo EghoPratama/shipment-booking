@@ -1,0 +1,39 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="space-y-4 rounded-xl bg-white p-6 shadow"
+>
+  <h2 class="text-xl font-semibold text-slate-800">Data Pengirim</h2>
+
+  <div>
+    <label for="sender-name" class="mb-1 block text-sm font-medium text-slate-700">Nama</label>
+    <input
+      id="sender-name"
+      type="text"
+      formControlName="name"
+      class="w-full rounded-md border border-slate-300 px-3 py-2"
+    />
+    @if (form.controls.name.touched && form.controls.name.invalid) {
+      <p class="mt-1 text-sm text-red-600">Nama wajib diisi, minimal 3 karakter.</p>
+    }
+  </div>
+
+  <div>
+    <label for="sender-phone" class="mb-1 block text-sm font-medium text-slate-700">
+      Nomor HP
+    </label>
+    <input
+      id="sender-phone"
+      type="tel"
+      formControlName="phone"
+      class="w-full rounded-md border border-slate-300 px-3 py-2"
+    />
+    @if (form.controls.phone.touched && form.controls.phone.invalid) {
+      <p class="mt-1 text-sm text-red-600">Nomor HP tidak valid. Contoh: 081234567890.</p>
+    }
+  </div>
+
+  <button type="submit" class="w-full cursor-pointer rounded-md bg-blue-600 px-4 py-2 font-medium text-white">
+    Lanjut
+  </button>
+</form>

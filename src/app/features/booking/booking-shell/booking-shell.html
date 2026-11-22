@@ -1,0 +1,22 @@
+<section class="mx-auto max-w-xl p-6">
+  <ol class="mb-6 flex items-start justify-between">
+    @for (step of steps; track step.path; let i = $index) {
+      <li class="flex flex-1 flex-col items-center gap-1 text-center">
+        <span
+          class="flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold"
+          [class]="i <= currentIndex() ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-500'"
+        >
+          {{ i < currentIndex() ? '✓' : i + 1 }}
+        </span>
+        <span
+          class="text-xs"
+          [class]="i <= currentIndex() ? 'font-medium text-blue-600' : 'text-slate-500'"
+        >
+          {{ step.label }}
+        </span>
+      </li>
+    }
+  </ol>
+
+  <router-outlet />
+</section>
