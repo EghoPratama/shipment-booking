@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BookingStore } from '../../../core/services/booking-store.service';
+import { indonesianPhone } from '../../../shared/validators/indonesian-phone.validator';
 
 @Component({
   selector: 'app-sender-step',
@@ -20,7 +21,7 @@ export class SenderStep {
     }),
     phone: new FormControl(this.store.sender()?.phone ?? '', {
       nonNullable: true,
-      validators: [Validators.required, Validators.pattern(/^(\+62|62|0)8[1-9][0-9]{6,10}$/)],
+      validators: [Validators.required, indonesianPhone()],
     }),
   });
 
@@ -29,7 +30,8 @@ export class SenderStep {
       this.form.markAllAsTouched();
       return;
     }
-    this.store.saveSender(this.form.getRawValue());
+    const value = this.form.getRawValue();
+    this.store.saveSender({ ...value, phone: value.phone.replace(/[\s-]/g, '') });
     this.router.navigate(['/booking/recipient']);
   }
 }
