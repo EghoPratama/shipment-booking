@@ -50,10 +50,7 @@ export class BookingPage {
 
   protected readonly provinces = toSignal(
     this.regionService.getProvinces().pipe(
-      catchError(() => {
-        this.errorMessage.set('Gagal memuat data wilayah. Coba lagi nanti.');
-        return of([] as Province[]);
-      }),
+      catchError(() => of([] as Province[])),
     ),
     { initialValue: [] as Province[] },
   );
@@ -158,10 +155,7 @@ export class BookingPage {
                 child.setValue(saved);
               }
             }),
-            catchError(() => {
-              this.errorMessage.set('Gagal memuat data wilayah. Coba lagi nanti.');
-              return of([] as T[]);
-            }),
+            catchError(() => of([] as T[])),
             finalize(() => loading.set(false)),
           );
         }),
