@@ -1,59 +1,66 @@
-# ShipmentBooking
+# Shipment Booking
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.3.0.
+A multi-step shipment booking flow built with **Angular** (standalone components, Signals, Typed Reactive Forms).
 
-## Development server
+**Live demo:** <https://shipment-booking.vercel.app/>
 
-To start a local development server, run:
+![Demo](docs/jam-video.gif)
+
+## Features
+
+- 4-step booking flow: Sender → Recipient → Package → Summary
+- Cascading address selects (province → regency → district → village) using the public [Indonesian Regions API](https://github.com/emsifa/api-wilayah-indonesia)
+- Typed Reactive Forms with a custom Indonesian phone number validator
+- Wizard state shared across steps and preserved when navigating back
+- Route guards that block access to a step until the previous ones are complete
+- Global HTTP error handling with automatic retry and toast notifications
+- Lazy-loaded routes, responsive layout (Tailwind CSS)
+- Unit tests for the validator, store, and guard
+
+## Tech stack
+
+Angular <versi kamu> · TypeScript (strict) · RxJS · Signals · Tailwind CSS · Vercel
+
+## Technical decisions
+
+**Signals instead of NgRx.** The state is small, local to one feature, and has a single writer. A signal-based store (`BookingStore`) exposes read-only signals and mutation methods, which is simpler than actions/reducers/effects for this size. NgRx would make sense once state is shared across many features or needs time-travel debugging.
+
+**`switchMap` for cascading selects.** Changing a parent select cancels the pending request for the old value, so a slow response can never overwrite the options of a newer selection.
+
+**`ControlValueAccessor` for the select component.** `SelectField` works with `formControlName`, so the form keeps full control over validation, disabled state, and reset, while the markup lives in one reusable component.
+
+**Interceptor order.** `errorInterceptor` wraps `retryInterceptor`, so the user sees one toast after retries are exhausted instead of one per attempt. Only GET requests are retried to avoid duplicating writes.
+
+**Guards as functions.** `bookingStepGuard('sender', 'recipient')` is a guard factory that redirects to the first incomplete step.
+
+## Limitations
+
+- Wizard state lives in memory, so a page refresh restarts the flow (guards redirect to step 1).
+- Shipping cost uses a mock rate table, not real courier pricing.
+- Region data comes from a third-party static API and contains 34 provinces (it does not include the latest Papua provinces).
+- The booking is not sent to a backend; this is a front-end demo.
+
+## Getting started
 
 ```bash
+git clone <URL repo kamu>
+cd shipment-booking
+npm install
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Open `http://localhost:4200`.
 
 ```bash
-ng generate component component-name
+ng test       # unit tests
+ng build      # production build
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Project structure
 
-```bash
-ng generate --help
 ```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
+src/app/
+├── core/       # models, services (API, store), interceptors, guards
+├── features/   # booking flow, not-found page
+└── shared/     # reusable components and validators
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
