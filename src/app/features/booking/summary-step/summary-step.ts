@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookingStore } from '../../../core/services/booking-store.service';
 
@@ -26,8 +26,17 @@ export class SummaryStep {
     return { sender, recipient, pkg, cost };
   });
 
+  protected readonly bookingCode = signal<string | null>(null);
+
   protected confirm(): void {
-    console.log('Booking confirmed:', this.summary());
+    // Kode mock untuk demo, bukan hasil dari backend
+    this.bookingCode.set('BK-' + Date.now().toString(36).toUpperCase());
+  }
+
+  protected startNew(): void {
+    this.store.reset();
+    this.bookingCode.set(null);
+    this.router.navigate(['/booking/sender']);
   }
 
   protected back(): void {

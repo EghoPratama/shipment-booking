@@ -1,4 +1,20 @@
-@if (summary(); as s) {
+@if (bookingCode(); as code) {
+  <div class="space-y-4 rounded-xl bg-white p-6 text-center shadow">
+    <p class="text-3xl">✅</p>
+    <h2 class="text-xl font-semibold text-slate-800">Booking berhasil dibuat</h2>
+    <p class="text-sm text-slate-600">
+      Kode booking: <span class="font-mono font-semibold">{{ code }}</span>
+    </p>
+    <p class="text-xs text-slate-500">Ini demo, tidak ada data yang dikirim ke server.</p>
+    <button
+      type="button"
+      (click)="startNew()"
+      class="w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white cursor-pointer"
+    >
+      Buat booking baru
+    </button>
+  </div>
+} @else if (summary(); as s) {
   <div class="space-y-4 rounded-xl bg-white p-6 shadow">
     <h2 class="text-xl font-semibold text-slate-800">Ringkasan Pesanan</h2>
 
